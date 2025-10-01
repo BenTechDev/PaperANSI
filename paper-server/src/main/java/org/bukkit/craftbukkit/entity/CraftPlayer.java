@@ -1285,10 +1285,9 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
 
     @Override
     public void setRotation(float yaw, float pitch) {
-        // Paper start - Teleport API
         if (this.getHandle().connection == null) return;
-        this.getHandle().forceSetRotation(yaw, false, pitch, false);
-        // Paper end - Teleportation API
+
+        super.setRotation(yaw, pitch);
     }
 
     @Override

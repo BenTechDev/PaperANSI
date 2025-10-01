@@ -274,11 +274,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         yaw = Location.normalizeYaw(yaw);
         pitch = Location.normalizePitch(pitch);
 
-        this.entity.setYRot(yaw);
-        this.entity.setXRot(pitch);
-        this.entity.yRotO = yaw;
-        this.entity.xRotO = pitch;
-        this.entity.setYHeadRot(yaw);
+        this.getHandle().forceSetRotation(yaw, false, pitch, false);
     }
 
     @Override
