@@ -10,7 +10,7 @@
                     <!-- Log root, Minecraft, Mojang and Bukkit loggers without prefix -->
                     <!-- Disable prefix for various plugins that bypass the plugin logger -->
                     <PatternMatch key=",net.minecraft.,Minecraft,com.mojang.,com.sk89q.,ru.tehkode.,Minecraft.AWE"
-                                  pattern="%customHighlight [%d{HH:mm:ss}] [%logger] %msg%n%xEx{full}" />
+                                  pattern="%customHighlight [%d{HH:mm:ss}] %msg%n%xEx{full}" />
                 </LoggerNamePatternSelector>
             </PatternLayout>
         </TerminalConsole>
