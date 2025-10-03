@@ -1,5 +1,6 @@
 package xyz.biomebattle.logging;
 
+import java.util.List;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.pattern.ConverterKeys;
@@ -24,21 +25,15 @@ public class CustomHighlightConverter extends LogEventPatternConverter {
     @Override
     public void format(LogEvent event, StringBuilder toAppendTo) {
         String level = event.getLevel().name();
-        String levelEmoji = getLevelEmoji(level);
-        LogStyle style = getStyleForLevel(level);
+        LogType logType = LogType.valueOf(level);
 
-        boolean isInfoOrWarn = level.equals("INFO") || level.equals("WARN");
-
-
-        if (style.getBackgroundColor() != null) {
-            toAppendTo.append(style.getBackgroundColor().getCode());
-        }
+        boolean needsExtraChar = List.of("WARN", "INFO", "FATAL").contains(level);
 
 
-        toAppendTo.append(style.getTextColor().getCode());
+        toAppendTo.append(logType.prettyLogLevel.prefixFormatting.getAsString());
 
 
-        String content = levelEmoji + " " + level;
+        String content = logType.prettyLogLevel.emoji + " " + logType.prettyLogLevel.prefix;
 
 
         toAppendTo.append(" ");
@@ -46,7 +41,7 @@ public class CustomHighlightConverter extends LogEventPatternConverter {
 
         toAppendTo.append(content);
 
-        if (isInfoOrWarn) toAppendTo.append(" ");
+        if (needsExtraChar) toAppendTo.append(" ");
 
 
         int paddingNeeded = DISPLAY_WIDTH - visualLength(content);
@@ -57,7 +52,7 @@ public class CustomHighlightConverter extends LogEventPatternConverter {
         }
 
 
-        toAppendTo.append(AnsiColor.RESET.getCode());
+        toAppendTo.append(logType.prettyLogLevel.messageFormatting.getAsString());
     }
 
     /**
@@ -83,43 +78,5 @@ public class CustomHighlightConverter extends LogEventPatternConverter {
             }
         }
         return length;
-    }
-
-    private LogStyle getStyleForLevel(String level) {
-        switch (level) {
-            case "FATAL":
-                return new LogStyle(AnsiColor.BLACK, AnsiColor.DARK_RED_BACKGROUND);
-            case "ERROR":
-                return new LogStyle(AnsiColor.BLACK, AnsiColor.RED_BACKGROUND);
-            case "WARN":
-                return new LogStyle(AnsiColor.BLACK, AnsiColor.YELLOW_BACKGROUND);
-            case "INFO":
-                return new LogStyle(AnsiColor.BLACK, AnsiColor.CYAN_BACKGROUND);
-            case "DEBUG":
-                return new LogStyle(AnsiColor.BLACK, AnsiColor.GRAY_BACKGROUND);
-            case "TRACE":
-                return new LogStyle(AnsiColor.BLACK, AnsiColor.LIGHT_BLUE_BACKGROUND);
-            default:
-                return LogStyle.WHITE;
-        }
-    }
-
-    private String getLevelEmoji(String level) {
-        switch (level) {
-            case "FATAL":
-                return "💀";
-            case "ERROR":
-                return "⛔";
-            case "WARN":
-                return "⚠\uFE0F";
-            case "INFO":
-                return "ℹ\uFE0F";
-            case "DEBUG":
-                return "🔧";
-            case "TRACE":
-                return "🔍";
-            default:
-                return "";
-        }
     }
 }
