@@ -24073,10 +24073,10 @@ index 530a753043f6673dbca3b95ad59cf3b1b482741a..88583ca23ef16a515deb2b90b7e2d61a
      // CraftBukkit start
      public boolean isDebugging() {
 diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
-index 4488d0a2f05ef07afab0f9a1483f54b21757b29e..98927d4a5fba2a0dcdb147ac10b82c3286ccdc6b 100644
+index 0b3d530667971d3557da4705c0d3b77a44474618..4d7dd2dd1ec7169629fd3f54fb1673b7db64d900 100644
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -391,7 +391,33 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -387,7 +387,33 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          return level.dimension() != Level.NETHER || this.getProperties().allowNether;
      }
  
